@@ -34,12 +34,13 @@ namespace RS1_Faktura.Controllers
                     Value = s.Id.ToString(),
                     Text = s.ImePrezime
                 }).ToList(),
-                PonudaStavke = db.Ponuda.Select(s => new SelectListItem
+                PonudaStavke = db.Ponuda.Where(p=> p.FakturaId==null)
+                .Select(s => new SelectListItem
                 {
                     Value = s.Id.ToString(),
-                    Text=s.Klijent.ImePrezime+" - "+ s.Datum.ToString("dd.MM.yyyy")
-                }).ToList()
-
+                    Text = s.Klijent.ImePrezime + " - " + s.Datum.ToString("dd.MM.yyyy")
+                }).ToList(),
+                Datum = DateTime.Now
             };
 
             return View(m);
@@ -56,7 +57,36 @@ namespace RS1_Faktura.Controllers
             {
                 Ponuda p = db.Ponuda.Find(f.PonudaID);
                 p.Faktura = faktura;
+
+                List<PonudaStavka> ponudaStavke = db.PonudaStavka.Where(ps => p.Id == ps.Id).ToList();
+                ponudaStavke.ForEach(ps =>
+                {
+                    db.Add(new FakturaStavka
+                    {
+                        Faktura = faktura,
+                        ProizvodId = ps.ProizvodId,
+                        Kolicina = ps.Kolicina,
+                        PopustProcenat = 5
+                    });
+                });
             }
+            db.SaveChanges();
+            return Redirect("/Faktura/Index");
+        }
+
+        public IActionResult Obrisi(int FakturaID)
+        {
+            Faktura f = db.Faktura.Find(FakturaID);
+            db.Remove(f);
+            var fStavke = db.FakturaStavka.Where(fs => fs.FakturaId == f.Id).ToList();
+            db.RemoveRange(fStavke);
+
+            List<Ponuda> ponude= db.Ponuda.Where(p => p.FakturaId == f.Id).ToList();
+            ponude.ForEach(p =>
+            {
+                p.FakturaId = null;
+            });
+
             db.SaveChanges();
             return Redirect("/Faktura/Index");
         }

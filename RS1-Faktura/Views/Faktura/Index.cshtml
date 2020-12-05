@@ -21,7 +21,7 @@
             <td>@f.Datum.ToString("dd.MM.yyyy")</td>
             <td>@f.ImeKlijenta</td>
             <td>
-                <a href="/Faktura/Detalji">Detalji</a> |
+                <a href="/Faktura/Detalji?FakturaID=@f.FakturaId">Detalji</a> |
                 <a href="/Faktura/Obrisi?FakturaID=@f.FakturaId">Obrisi</a>
             </td>
         </tr>
@@ -29,3 +29,4 @@
     </tbody>
 </table>
 <a href="/Faktura/Dodaj">Dodaj</a>
+

@@ -73,7 +73,6 @@ namespace RS1_Faktura.Controllers
             db.SaveChanges();
             return Redirect("/Faktura/Index");
         }
-
         public IActionResult Obrisi(int FakturaID)
         {
             Faktura f = db.Faktura.Find(FakturaID);
@@ -89,6 +88,18 @@ namespace RS1_Faktura.Controllers
 
             db.SaveChanges();
             return Redirect("/Faktura/Index");
+        }
+        public IActionResult Detalji(int FakturaID)
+        {
+            FakturaDetaljiVM m = db.Faktura.Where(f => f.Id == FakturaID)
+                .Select(f => new FakturaDetaljiVM
+                {
+                    FakturaId=f.Id,
+                    ImeKlijenta = f.Klijent.ImePrezime,
+                    Datum = f.Datum
+                }).FirstOrDefault();
+              
+            return View(m);
         }
     }
 }

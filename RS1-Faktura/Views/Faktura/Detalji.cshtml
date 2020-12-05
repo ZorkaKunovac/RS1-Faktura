@@ -1,0 +1,19 @@
+﻿@using RS1_Faktura.ViewModels
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+@model FakturaDetaljiVM
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Klijent:    @Model.ImeKlijenta</th>
+        </tr>
+           <tr> <th>Datum:      @Model.Datum.ToString("dd.MM.yyyy")</th></tr>
+    </thead>
+</table>
+<div id="ajaxDiv">
+
+</div>

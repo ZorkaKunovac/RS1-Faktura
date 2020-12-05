@@ -1,0 +1,36 @@
+﻿@using RS1_Faktura.ViewModels
+
+@{
+}
+@model List<StavkeFakturePrikaz>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>NazivProizvoda</th>
+            <th>Cijena</th>
+            <th>Kolicina</th>
+            <th>Procenat</th>
+            <th>Iznos</th>
+            <th>Akcija</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (StavkeFakturePrikaz stavke in Model)
+        {
+        <tr>
+            <th>@stavke.NazivProizvoda</th>
+            <th>@stavke.Cijena</th>
+            <th>@stavke.Kolicina</th>
+            <th>@stavke.Procenat</th>
+            <th>@stavke.Iznos</th>
+            <th>Akcija</th>
+            <td>
+                <a href="/FakturaStavka/Detalji">Detalji</a> |
+                <a href="/FakturaStavka/Obrisi?StavkeFaktureId=@stavke.StavkeFaktureId">Obrisi</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+<a href="/FakturaStavka/Dodaj">Dodaj</a>

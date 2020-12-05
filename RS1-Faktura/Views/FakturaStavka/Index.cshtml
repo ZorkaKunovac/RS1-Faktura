@@ -1,6 +1,7 @@
 ﻿@using RS1_Faktura.ViewModels
 
 @{
+    Layout = null;
 }
 @model List<StavkeFakturePrikaz>
 
@@ -19,14 +20,12 @@
         @foreach (StavkeFakturePrikaz stavke in Model)
         {
         <tr>
-            <th>@stavke.NazivProizvoda</th>
-            <th>@stavke.Cijena</th>
-            <th>@stavke.Kolicina</th>
-            <th>@stavke.Procenat</th>
-            <th>@stavke.Iznos</th>
-            <th>Akcija</th>
+            <td>@stavke.NazivProizvoda</td>
+            <td>@stavke.Cijena</td>
+            <td>@stavke.Kolicina</td>
+            <td>@stavke.Procenat</td>
+            <td>@stavke.Iznos</td>
             <td>
-                <a href="/FakturaStavka/Detalji">Detalji</a> |
                 <a href="/FakturaStavka/Obrisi?StavkeFaktureId=@stavke.StavkeFaktureId">Obrisi</a>
             </td>
         </tr>

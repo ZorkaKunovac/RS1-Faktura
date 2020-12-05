@@ -17,3 +17,8 @@
 <div id="ajaxDiv">
 
 </div>
+<script>
+    $.get("/FakturaStavka/Index?FakturaID=@Model.FakturaId", function (d) {
+        $("#ajaxDiv").html(d);
+    })
+</script>

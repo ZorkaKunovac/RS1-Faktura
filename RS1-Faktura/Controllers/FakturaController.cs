@@ -58,7 +58,7 @@ namespace RS1_Faktura.Controllers
                 Ponuda p = db.Ponuda.Find(f.PonudaID);
                 p.Faktura = faktura;
 
-                List<PonudaStavka> ponudaStavke = db.PonudaStavka.Where(ps => p.Id == ps.Id).ToList();
+                List<PonudaStavka> ponudaStavke = db.PonudaStavka.Where(ps => ps.PonudaId==p.Id).ToList();
                 ponudaStavke.ForEach(ps =>
                 {
                     db.Add(new FakturaStavka
@@ -77,10 +77,10 @@ namespace RS1_Faktura.Controllers
         {
             Faktura f = db.Faktura.Find(FakturaID);
             db.Remove(f);
-            var fStavke = db.FakturaStavka.Where(fs => fs.FakturaId == f.Id).ToList();
+            List<FakturaStavka> fStavke = db.FakturaStavka.Where(fs => fs.FakturaId == FakturaID).ToList();
             db.RemoveRange(fStavke);
 
-            List<Ponuda> ponude= db.Ponuda.Where(p => p.FakturaId == f.Id).ToList();
+            List<Ponuda> ponude= db.Ponuda.Where(p => p.FakturaId == FakturaID).ToList();
             ponude.ForEach(p =>
             {
                 p.FakturaId = null;

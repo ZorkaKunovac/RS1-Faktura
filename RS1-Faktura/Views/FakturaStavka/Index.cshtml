@@ -3,32 +3,33 @@
 @{
     Layout = null;
 }
-@model List<StavkeFakturePrikaz>
+@model StavkeFakturePrikaz
 
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th>NazivProizvoda</th>
-            <th>Cijena</th>
-            <th>Kolicina</th>
-            <th>Procenat</th>
-            <th>Iznos</th>
-            <th>Akcija</th>
+            <th> Proizvod</th>
+            <th> Cijena</th>
+            <th> Kolicina</th>
+            <th> Popust</th>
+            <th> Iznos</th>
+            <th> Akcija</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (StavkeFakturePrikaz stavke in Model)
+        @foreach (var f in Model.rows)
         {
-        <tr>
-            <td>@stavke.NazivProizvoda</td>
-            <td>@stavke.Cijena</td>
-            <td>@stavke.Kolicina</td>
-            <td>@stavke.Procenat</td>
-            <td>@stavke.Iznos</td>
-            <td>
-                <a href="/FakturaStavka/Obrisi?StavkeFaktureId=@stavke.StavkeFaktureId">Obrisi</a>
-            </td>
-        </tr>
+            <tr>
+                <td>@f.Proizvod</td>
+                <td>@f.Cijena</td>
+                <td>@f.Kolicina</td>
+                <td>@f.Popust</td>
+                <td>@f.Iznos</td>
+                <td>
+                    <button onclick="StavkaObrisi(@f.StavkaID)">Obrisi</button>
+                    <a href="/FakturaStavka/Obrisi?StavkeFaktureId=@f.StavkaID">Obrisi</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>

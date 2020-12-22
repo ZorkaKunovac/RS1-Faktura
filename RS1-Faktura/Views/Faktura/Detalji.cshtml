@@ -18,7 +18,18 @@
 
 </div>
 <script>
-    $.get("/FakturaStavka/Index?FakturaID=@Model.FakturaId", function (d) {
-        $("#ajaxDiv").html(d);
-    })
+    function UcitajStavke() {
+        $.get("/FakturaStavka/Index?FakturaID=@Model.FakturaId", function (d) {
+            $("#ajaxDiv").html(d);
+        })
+    }
+    UcitajStavke();
+
+    function StavkaObrisi(StavkeFaktureId) {
+        $.get("/FakturaStavka/Obrisi?StavkeFaktureId=" + StavkeFaktureId,
+            function (d) {
+                UcitajStavke();
+            });
+    }
+
 </script>

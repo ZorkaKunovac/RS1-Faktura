@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RS1.Ispit.Web.EF;
+using RS1.Ispit.Web.Models;
 using RS1_Faktura.ViewModels;
 
 namespace RS1_Faktura.Controllers
@@ -13,17 +14,28 @@ namespace RS1_Faktura.Controllers
         MojContext db = new MojContext();
         public IActionResult Index(int FakturaID)
         {
-            var m = db.FakturaStavka.Where(fs=> fs.FakturaId== FakturaID)
-                .Select(fs => new StavkeFakturePrikaz
+            StavkeFakturePrikaz m = new StavkeFakturePrikaz();
+               m.rows = db.FakturaStavka.Where(fs=> fs.FakturaId== FakturaID)
+                .Select(fs => new StavkeFakturePrikaz.Rows
                 {
-                    NazivProizvoda = fs.Proizvod.Naziv,
+                    StavkaID =fs.Id,
+                    Proizvod = fs.Proizvod.Naziv,
                     Cijena = fs.Proizvod.Cijena,
                     Kolicina = fs.Kolicina,
-                    Procenat = fs.PopustProcenat,
+                    Popust = fs.PopustProcenat,
                     Iznos = fs.Kolicina * fs.Proizvod.Cijena * (1 - fs.PopustProcenat / 100)
                 }).ToList();
-            
+            m.FakturaID = FakturaID;
             return View(m);
+        }
+
+        public string Obrisi(int StavkeFaktureId)
+        {
+            FakturaStavka fakturaStavka = db.FakturaStavka.Find(StavkeFaktureId);
+            db.Remove(fakturaStavka);
+            db.SaveChanges();
+
+            return "OK";
         }
     }
 }

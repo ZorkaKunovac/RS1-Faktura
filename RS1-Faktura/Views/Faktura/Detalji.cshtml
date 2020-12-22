@@ -32,4 +32,10 @@
             });
     }
 
+    function StavkaUredi() {
+        $.get("/FakturaStavka/Dodaj?StavkeFaktureId=" + StavkeFaktureId,
+            function (d) {
+                $("#ajaxDiv").html(d);
+            });
+    }
 </script>

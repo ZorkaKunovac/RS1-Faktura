@@ -32,10 +32,28 @@
             });
     }
 
-    function StavkaUredi() {
-        $.get("/FakturaStavka/Dodaj?StavkeFaktureId=" + StavkeFaktureId,
+    function StavkaUredi(StavkaID) {
+        $.get("/FakturaStavka/Uredi?StavkaID=" + StavkaID,
             function (d) {
                 $("#ajaxDiv").html(d);
             });
+    }
+    
+    function StavkaDodaj(FakturaID) {
+        $.get("/FakturaStavka/Dodaj?FakturaID=" + FakturaID,
+            function (d) {
+                $("#ajaxDiv").html(d);
+            });
+    }
+
+    function StavkaSnimi(StavkaID) {
+        var form = $("StavkaForma");
+        var url = "/FakturaStavka/Snimi";
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(),
+            success: function (data) { UcitajStavke(); }
+        });
     }
 </script>

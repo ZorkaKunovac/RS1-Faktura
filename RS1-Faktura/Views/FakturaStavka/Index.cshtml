@@ -28,10 +28,10 @@
                 <td>
                     <button onclick="StavkaObrisi(@f.StavkaID)">Obrisi</button>
                     <button onclick="StavkaUredi(@f.StavkaID)">Uredi</button>
-                    @*<a href="/FakturaStavka/Uredi?StavkeFaktureId=@f.StavkaID"> Uredi</a>*@
+                    <a href="/FakturaStavka/Uredi?StavkaID=@f.StavkaID"> Uredi</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
-<a href="/FakturaStavka/Dodaj?FakturaID=@Model.FakturaID">Dodaj</a>
+<button onclick="StavkaDodaj(@Model.FakturaID)">Dodaj</button>

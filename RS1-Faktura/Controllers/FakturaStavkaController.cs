@@ -43,38 +43,39 @@ namespace RS1_Faktura.Controllers
             return View(m);
         }
 
-        //public IActionResult Uredi(int StavkaID)
-        //{
-        //    var m = db.FakturaStavka.Find(StavkaID)
-        //        .Select(fs => new StavkeFaktureDodajVM
-        //        {
-        //            Proizvodi = db.Proizvod.Select(p => new SelectListItem
-        //            {
-        //                Value = p.Id.ToString(),
-        //                Text = p.Naziv + "-" + p.Cijena
-        //            }).ToList(),
-        //            Kolicina = fs.Kolicina,
-        //            StavkaID = StavkaID
-        //        });
+        public IActionResult Uredi(int StavkaID)
+        {
+            StavkeFaktureDodajVM m = new StavkeFaktureDodajVM();
 
-        //    return View(m);
-        //}
+            var s = db.FakturaStavka.Find(StavkaID);
+            m.Kolicina = s.Kolicina;
+            m.Proizvod = s.ProizvodId;
+            m.Proizvodi = db.Proizvod.Select(p => new SelectListItem
+            {
+                Value = p.Id.ToString(),
+                Text = p.Naziv + "-" + p.Cijena
+            }).ToList();
+
+            return View("Dodaj", m);
+        }
 
         public string Snimi(StavkeFaktureDodajVM s)
         {
-            FakturaStavka fakturaStavka = new FakturaStavka
+
+            FakturaStavka fakturaStavka;
+            if (s.StavkaID == 0) {
+                fakturaStavka = new FakturaStavka();
+                fakturaStavka.FakturaId = s.FakturaID;
+                db.Add(fakturaStavka);
+            }
+            else
             {
-                FakturaId = s.FakturaID,
-                ProizvodId = s.Proizvod,
-                Kolicina = s.Kolicina,
-                PopustProcenat = 5
-            };
+                fakturaStavka = db.FakturaStavka.Find(s.StavkaID);
+            }
+            fakturaStavka.ProizvodId = s.Proizvod;
+            fakturaStavka.Kolicina = s.Kolicina;
+            fakturaStavka.PopustProcenat = 5;
 
-            //FakturaStavka fakturaStavka = db.FakturaStavka.Find(s.StavkaID);
-            //fakturaStavka.ProizvodId = s.Proizvod;
-            //fakturaStavka.Kolicina = s.Kolicina;
-
-            db.Add(fakturaStavka);
             db.SaveChanges();
             return "OK";
         }

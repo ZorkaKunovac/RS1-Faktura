@@ -59,9 +59,8 @@ namespace RS1_Faktura.Controllers
             return View("Dodaj", m);
         }
 
-        public string Snimi(StavkeFaktureDodajVM s)
+        public IActionResult Snimi(StavkeFaktureDodajVM s)
         {
-
             FakturaStavka fakturaStavka;
             if (s.StavkaID == 0) {
                 fakturaStavka = new FakturaStavka();
@@ -77,17 +76,17 @@ namespace RS1_Faktura.Controllers
             fakturaStavka.PopustProcenat = 5;
 
             db.SaveChanges();
-            return "OK";
+            return Redirect("/Faktura/Detalji?FakturaID=" + fakturaStavka.FakturaId);
         }
 
 
-        public string Obrisi(int StavkeFaktureId)
+        public IActionResult Obrisi(int StavkeFaktureId)
         {
             FakturaStavka fakturaStavka = db.FakturaStavka.Find(StavkeFaktureId);
             db.Remove(fakturaStavka);
             db.SaveChanges();
 
-            return "OK";
+            return Redirect("/Faktura/Detalji?FakturaID=" + fakturaStavka.FakturaId);
         }
     }
 }

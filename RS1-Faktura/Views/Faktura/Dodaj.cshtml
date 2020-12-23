@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Snimi">
+        <form id="StavkaForma" asp-action="Snimi">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="KlijentID" class="control-label"></label>
@@ -28,7 +28,7 @@
                 <span asp-validation-for="PonudaID" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Snimi" class="btn btn-primary" />
+                <input type="button" onclick="StavkaSnimi()" value="Snimi" class="btn btn-primary" />
             </div>
         </form>
     </div>
